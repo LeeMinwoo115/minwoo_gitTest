@@ -45,9 +45,4 @@ jobs:
             ./$GITHUB_SHA.tgz s3://testbucket-minwoo/$PROJECT_NAME/$GITHUB_SHA.tgz
 
       - name: Code Deploy
-        run: aws deploy create-deployment \
-          --application-name minwoo-dep-test \
-          --file-exists-behavior OVERWRITE \
-          --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name minwoo-test2 \
-          --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
+        run: aws deploy create-deployment --application-name minwoo-dep-test --file-exists-behavior OVERWRITE --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name minwoo-test2 --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
