@@ -49,4 +49,8 @@ jobs:
           --file-exists-behavior OVERWRITE \
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name minwoo-test2 \
+<<<<<<< HEAD
           --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
+=======
+          --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
+>>>>>>> c07007d1144133bf5c4038819e02521ee641eb5e
