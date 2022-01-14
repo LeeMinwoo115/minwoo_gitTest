@@ -35,8 +35,6 @@ jobs:
             #Now I have got the access of EC2 and I will start the deploy .
             cd /LABs &&
             git checkout minwoo &&
-            git fetch --all &&
-            git reset --hard origin/minwoo &&
             git pull origin minwoo
           '
 
