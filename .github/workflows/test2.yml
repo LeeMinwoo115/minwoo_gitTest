@@ -23,33 +23,30 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
         
-      - name : Deploy in EC2
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          HOSTNAME: ${{ secrets.SERVER_HOST2 }}
-          UNSER_NAME: ${{ secrets.USER_NAME }}
+#       - name : Deploy in EC2
+#         env:
+#           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+#           HOSTNAME: ${{ secrets.SERVER_HOST2 }}
+#           UNSER_NAME: ${{ secrets.USER_NAME }}
           
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            #Now I have got the access of EC2 and I will start the deploy .
-            cd /LABs &&
-            git checkout minwoo &&
-            git fetch --all &&
-            git reset --hard origin/minwoo &&
-            git pull origin minwoo
-          '
+#         run: |
+#           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+#           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+#             #Now I have got the access of EC2 and I will start the deploy .
+#             cd /LABs &&
+#             git checkout minwoo &&
+#             git pull origin minwoo
+#           '
 
       - name: Upload to S3
         run: |
           aws s3 cp \
             --region ap-northeast-2 \
             ./$GITHUB_SHA.tgz s3://testbucket-minwoo/$PROJECT_NAME/$GITHUB_SHA.tgz
-
-#       - name: Code Deploy
-#         run: aws deploy create-deployment \
-#           --application-name minwoo-dep-test \
-#           --file-exists-behavior OVERWRITE \
-#           --deployment-config-name CodeDeployDefault.OneAtATime \
-#           --deployment-group-name minwoo \
-#           --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
+      - name: Code Deploy
+        run: aws deploy create-deployment \
+          --application-name minwoo-dep-test \
+          --file-exists-behavior OVERWRITE \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name minwoo-test2 \
+          --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
