@@ -1,6 +1,6 @@
-name: Action Test
+name: Action Test1
 env:
-  PROJECT_NAME: minwoo_test
+  PROJECT_NAME: minwoo_test1
 on:
   push:
     branches:
@@ -20,7 +20,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-host : ${{ secrets.SERVER_HOST1 }}
           aws-region: ap-northeast-2
 
       - name: Upload to S3
@@ -31,8 +32,8 @@ jobs:
 
       - name: Code Deploy
         run: aws deploy create-deployment \
-          --application-name spm-codedeploy \
+          --application-name minwoo-dep-test \
           --file-exists-behavior OVERWRITE \
           --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name spm \
+          --deployment-group-name minwoo \
           --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
