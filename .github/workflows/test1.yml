@@ -4,7 +4,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -34,10 +34,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             #Now I have got the access of EC2 and I will start the deploy .
             cd /LABs &&
-            git checkout main &&
+            git checkout master &&
             git fetch --all &&
-            git reset --hard origin/main &&
-            git pull origin main
+            git reset --hard origin/master &&
+            git pull origin master
           '
 
       - name: Upload to S3
