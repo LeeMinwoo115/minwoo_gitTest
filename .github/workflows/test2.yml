@@ -43,14 +43,14 @@ jobs:
           aws s3 cp \
             --region ap-northeast-2 \
             ./$GITHUB_SHA.tgz s3://testbucket-minwoo/$PROJECT_NAME/$GITHUB_SHA.tgz
+      
+      - name: Branch checkout
+        run: git checkout origin minwoo
+
       - name: Code Deploy
         run: aws deploy create-deployment \
           --application-name minwoo-dep-test \
           --file-exists-behavior OVERWRITE \
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name minwoo-test2 \
-<<<<<<< HEAD
           --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
-=======
-          --s3-location bucket=testbucket-minwoo,bundleType=tgz,key=$PROJECT_NAME/$GITHUB_SHA.tgz
->>>>>>> c07007d1144133bf5c4038819e02521ee641eb5e
