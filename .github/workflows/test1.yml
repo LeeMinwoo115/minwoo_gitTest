@@ -23,6 +23,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-host : ${{ secrets.SERVER_HOST1 }}
           aws-region: ap-northeast-2
+          
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@&{SERVER_HOST1} '
+            #Now I have got the access of EC2 and I will start the deploy .
+            cd /LABs &&
+            git checkout main &&
+            git fetch --all &&
+            git reset --hard origin/main &&
+            git pull origin main
+          '
 
       - name: Upload to S3
         run: |
