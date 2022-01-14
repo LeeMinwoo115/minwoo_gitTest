@@ -43,6 +43,9 @@ jobs:
           aws s3 cp \
             --region ap-northeast-2 \
             ./$GITHUB_SHA.tgz s3://testbucket-minwoo/$PROJECT_NAME/$GITHUB_SHA.tgz
+      
+      - name: Branch checkout
+        run: git checkout origin minwoo
 
       - name: Code Deploy
         run: aws deploy create-deployment \
